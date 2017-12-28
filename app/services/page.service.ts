@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"; // #A
+import { Injectable } from "@angular/core";
 import { Page } from "../models/page";
 import * as fileSystem from "file-system";
 import * as image from "image-source";
@@ -9,9 +9,12 @@ export class PageService {
   getPage( id: number ): Page {
   let pages = this.getPages();
   let index = this.findPageIndex(pages, id);
-  if (index === -1)return null;
+  
+  if (index === -1) return null;
+  
   return pages[index];
-  }
+  
+}
 
   getPages(): Array<Page> {
     let file = fileSystem.knownFolders.documents().getFile("scrapbook.json");
