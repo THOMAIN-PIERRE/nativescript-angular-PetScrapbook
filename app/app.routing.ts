@@ -4,6 +4,7 @@ import { AboutComponent } from "./views/about/about.component";
 import { DetailComponent } from './views/detail/detail.component';
 
 import { SelectDateComponent } from "./views/modals/select-date/select-date.component";
+import { SelectGenderComponent } from "./views/modals/select-gender/select-gender.component";
 
 export const routes: any = [
   { path: "", component: HomeComponent },
@@ -21,5 +22,6 @@ export const navigatableComponents: any = [
 ];
 
 export const entryComponents: any = [
-  SelectDateComponent
+  SelectDateComponent,
+  SelectGenderComponent
 ];

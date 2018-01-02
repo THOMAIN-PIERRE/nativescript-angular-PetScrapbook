@@ -7,6 +7,7 @@ import "rxjs/add/operator/switchMap";
 
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog"; 
 import { SelectDateComponent } from "../modals/select-date/select-date.component";
+import { SelectGenderComponent } from '../modals/select-gender/select-gender.component';
 
 @Component({
   selector: "detail",
@@ -65,6 +66,22 @@ export class DetailComponent implements OnInit {
         this.page.Age = diff.toFixed(1);
       })
       .catch( err => console.error("Error: ", err) );
+  }
+
+  onGenderTap(): void {
+
+    let options: ModalDialogOptions = {
+      context: this.page.Gender,
+      fullscreen: true,
+      viewContainerRef: this.viewContainerRef
+    };
+
+    this.modalService.showModal(SelectGenderComponent, options)
+      .then((dialogResult: string) => {
+        console.log('dialogResult: ', dialogResult);
+        this.page.Gender = dialogResult;
+        
+      } );
   }
 
 }
