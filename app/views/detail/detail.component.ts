@@ -48,8 +48,9 @@ export class DetailComponent implements OnInit {
 
   onBirthDateTap(): void {
 
+    console.log('this.page.BirthDate: ', this.page.BirthDate);
     let options: ModalDialogOptions = {
-      context: this.page.BirthDate ? this.page.BirthDate.toLocaleDateString() : new Date().toLocaleDateString(),
+      context: this.page.BirthDate ? new Date(this.page.BirthDate).toLocaleDateString() : new Date().toLocaleDateString(),
       fullscreen: true,
       viewContainerRef: this.viewContainerRef
     };
@@ -57,6 +58,7 @@ export class DetailComponent implements OnInit {
     this.modalService.showModal( SelectDateComponent, options )
       .then((dialogResult: any) => {
         console.log('dialogResult: ', dialogResult);
+        
         this.page.BirthDate = new Date( dialogResult );
         let now = Date.now();
         let diff = Math.abs(now - this.page.BirthDate) / 1000 / 31536000;
