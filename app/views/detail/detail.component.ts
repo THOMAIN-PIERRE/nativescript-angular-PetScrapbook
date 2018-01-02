@@ -9,6 +9,10 @@ import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/mod
 import { SelectDateComponent } from "../modals/select-date/select-date.component";
 import { SelectGenderComponent } from '../modals/select-gender/select-gender.component';
 
+import { ImageSource } from "image-source";
+import * as camera from "nativescript-camera";
+import * as geolocation from "nativescript-geolocation";
+
 @Component({
   selector: "detail",
   providers: [ PageService ],
@@ -47,9 +51,8 @@ export class DetailComponent implements OnInit {
     this.routerExtensions.navigate( ["list"], options );
   }
 
-  onBirthDateTap(): void {
+  public onBirthDateTap(): void {
 
-    console.log('this.page.BirthDate: ', this.page.BirthDate);
     let options: ModalDialogOptions = {
       context: this.page.BirthDate ? new Date(this.page.BirthDate).toLocaleDateString() : new Date().toLocaleDateString(),
       fullscreen: true,
@@ -68,7 +71,7 @@ export class DetailComponent implements OnInit {
       .catch( err => console.error("Error: ", err) );
   }
 
-  onGenderTap(): void {
+  public onGenderTap(): void {
 
     let options: ModalDialogOptions = {
       context: this.page.Gender,
@@ -84,4 +87,25 @@ export class DetailComponent implements OnInit {
       } );
   }
 
+  public onAddImageTap(): void {
+
+    if (!geolocation.isEnabled()) geolocation.enableLocationRequest();
+    
+    camera.takePicture({ width: 100, height: 100, keepAspectRatio: true })
+      .then( picture => {
+        let image = new ImageSource();
+        
+        image.fromAsset(picture)
+        .then( imageSource => {
+          this.page.Image = imageSource;
+          this.page.ImageBase64 = this.page.Image.toBase64String("png");
+        });
+
+        geolocation.getCurrentLocation(null)
+          .then( location  => {
+            this.page.Lat = location.latitude;
+            this.page.Long = location.longitude;
+          });
+      });
+  }
 }
