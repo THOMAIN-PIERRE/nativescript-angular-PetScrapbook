@@ -3,6 +3,8 @@ import { ListComponent } from "./views/list/list.component";
 import { AboutComponent } from "./views/about/about.component";
 import { DetailComponent } from './views/detail/detail.component';
 
+import { SelectDateComponent } from "./views/modals/select-date/select-date.component";
+
 export const routes: any = [
   { path: "", component: HomeComponent },
   { path: "home", component: HomeComponent },
@@ -16,4 +18,8 @@ export const navigatableComponents: any = [
   ListComponent,
   AboutComponent,
   DetailComponent
+];
+
+export const entryComponents: any = [
+  SelectDateComponent
 ];

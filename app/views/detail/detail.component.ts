@@ -1,9 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewContainerRef } from "@angular/core";
 import { Page } from "../../models/page";
 import { RouterExtensions, PageRoute } from "nativescript-angular/router";
 import { NavigationOptions } from "nativescript-angular/router/ns-location-strategy";
 import { PageService } from "../../services/page.service";
 import "rxjs/add/operator/switchMap";
+
+import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog"; 
+import { SelectDateComponent } from "../modals/select-date/select-date.component";
 
 @Component({
   selector: "detail",
@@ -16,7 +19,9 @@ export class DetailComponent implements OnInit {
 
   constructor( private routerExtensions: RouterExtensions,
                private pageService: PageService,
-               private pageRoute: PageRoute) { }
+               private pageRoute: PageRoute,
+               private modalService: ModalDialogService,
+               private viewContainerRef: ViewContainerRef ) { }
 
 
   ngOnInit(): void {
@@ -39,6 +44,23 @@ export class DetailComponent implements OnInit {
     
     var options = <NavigationOptions> { clearHistory: true };
     this.routerExtensions.navigate( ["list"], options );
+  }
+
+  onBirthDateTap(): void {
+
+    let options: ModalDialogOptions = {
+      context: this.page.BirthDate,
+      fullscreen: true,
+      viewContainerRef: this.viewContainerRef
+    };
+
+    this.modalService.showModal( SelectDateComponent, options )
+      .then((dialogResult: any) => {
+        this.page.BirthDate = dialogResult;
+        let now = Date.now();
+        let diff = Math.abs(now - this.page.BirthDate) / 1000 / 31536000;
+        this.page.Age = diff.toFixed(1);
+      });
   }
 
 }

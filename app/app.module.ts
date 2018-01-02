@@ -1,24 +1,27 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
-import { routes, navigatableComponents } from "./app.routing";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { routes, navigatableComponents, entryComponents } from "./app.routing";
 
 import { AppComponent } from "./app.component";
-import { HomeComponent } from './../app/views/home/home.component';
-import { ListComponent } from './../app/views/list/list.component';
-import { AboutComponent } from "./views/about/about.component";
 
 @NgModule({
   declarations: [ 
     AppComponent,
-    ...navigatableComponents 
+    ...navigatableComponents
   ],
   
+  entryComponents: [
+    ...entryComponents
+  ],
+
   bootstrap: [ AppComponent ],
   
   imports: [ 
     NativeScriptModule, 
     NativeScriptRouterModule,
+    NativeScriptFormsModule,
     NativeScriptRouterModule.forRoot( routes ) 
   ],
   
