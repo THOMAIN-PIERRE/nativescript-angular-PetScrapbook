@@ -49,18 +49,20 @@ export class DetailComponent implements OnInit {
   onBirthDateTap(): void {
 
     let options: ModalDialogOptions = {
-      context: this.page.BirthDate,
+      context: this.page.BirthDate ? this.page.BirthDate.toLocaleDateString() : new Date().toLocaleDateString(),
       fullscreen: true,
       viewContainerRef: this.viewContainerRef
     };
 
     this.modalService.showModal( SelectDateComponent, options )
       .then((dialogResult: any) => {
-        this.page.BirthDate = dialogResult;
+        console.log('dialogResult: ', dialogResult);
+        this.page.BirthDate = new Date( dialogResult );
         let now = Date.now();
         let diff = Math.abs(now - this.page.BirthDate) / 1000 / 31536000;
         this.page.Age = diff.toFixed(1);
-      });
+      })
+      .catch( err => console.error("Error: ", err) );
   }
 
 }

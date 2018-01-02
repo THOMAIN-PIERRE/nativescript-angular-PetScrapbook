@@ -8,14 +8,14 @@ import { ModalDialogParams } from "nativescript-angular/modal-dialog";
 })
 
 export class SelectDateComponent {
-  public date: any;
+  public date: Date;
   
   constructor( private params: ModalDialogParams ) {
-    this.date = params.context;
+    this.date = new Date( params.context );
   }
 
   onDoneTap(): any {
-    this.params.closeCallback( this.date );
+    this.params.closeCallback( this.date.toLocaleDateString() );
   }
 
 }

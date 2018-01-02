@@ -17,7 +17,7 @@
       <Label class="label" [text]="'Birth date: ' + 
                                    (page.BirthDate === null ? '' : '(' + page.Age + ' years old)')">
       </Label>
-      <TextField class="input" editable="false" [text]="page.BirthDate" (tap)="onBirthDateTap()" hint="Enter a birth date...">
+      <TextField class="input" editable="false" [text]="page.BirthDate | date: 'dd/MM/yyyy'" (tap)="onBirthDateTap()" hint="Enter a birth date...">
       </TextField>
     </StackLayout>
 
