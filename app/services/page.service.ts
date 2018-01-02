@@ -8,21 +8,21 @@ export class PageService {
 
   getPage( id: number ): Page {
   let pages = this.getPages();
-  let index = this.findPageIndex(pages, id);
+  let index = this.findPageIndex( pages, id );
   
-  if (index === -1) return null;
+  if ( index === -1 ) return null;
   
-  return pages[index];
+  return pages[ index ];
   
 }
 
   getPages(): Array<Page> {
-    let file = fileSystem.knownFolders.documents().getFile("scrapbook.json");
+    let file = fileSystem.knownFolders.documents().getFile( "scrapbook.json" );
     
     let pages = file.readTextSync().length === 0 ? new Array<Page>()
-    : <Array<Page>>JSON.parse(file.readTextSync());
+    : <Array<Page>>JSON.parse( file.readTextSync() );
 
-    pages.forEach( page  =>  page.Image = image.fromBase64(page.ImageBase64) );
+    pages.forEach( page => page.Image = image.fromBase64(page.ImageBase64) );
     
     return pages;
   
@@ -32,7 +32,7 @@ export class PageService {
 
     let file = fileSystem.knownFolders.documents().getFile("scrapbook.json");
     let pages = this.getPages();
-    let index = this.findPageIndex(pages, scrapbookPage.Id);
+    let index = this.findPageIndex( pages, scrapbookPage.Id );
     let page = new Page();
 
     page.Id = scrapbookPage.Id;
@@ -44,11 +44,11 @@ export class PageService {
     page.Lat = scrapbookPage.Lat;
     page.Long = scrapbookPage.Long;
     
-    if (index !== -1) pages[index] = scrapbookPage;
-    else pages.push(scrapbookPage);
+    if ( index !== -1 ) pages[index] = scrapbookPage;
+    else pages.push( scrapbookPage );
 
-    let json = JSON.stringify(pages);
-    file.writeText(json);
+    let json = JSON.stringify( pages );
+    file.writeText( json );
   }
 
   private findPageIndex( pages: any, id: number ): number {
